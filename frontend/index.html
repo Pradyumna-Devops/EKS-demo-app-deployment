@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EKS 3-Tier Demo</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f4f6f8;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 80px auto;
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        h1 {
+            margin-bottom: 10px;
+        }
+
+        .status {
+            margin: 25px 0;
+            padding: 15px;
+            background: #e8f5e9;
+            border-radius: 6px;
+        }
+
+        .info {
+            margin-top: 25px;
+            text-align: left;
+        }
+
+        .info p {
+            padding: 8px;
+            border-bottom: 1px solid #eee;
+        }
+
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        #result {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f1f1f1;
+            border-radius: 5px;
+            min-height: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>EKS 3-Tier Demo Application</h1>
+
+    <p>Frontend running on Nginx</p>
+
+    <div class="status">
+        <strong>Application Status:</strong>
+        <span id="status">Checking...</span>
+    </div>
+
+    <div class="info">
+        <p><strong>Frontend:</strong> Nginx</p>
+        <p><strong>Backend:</strong> Python Flask</p>
+        <p><strong>Database:</strong> PostgreSQL</p>
+        <p><strong>Platform:</strong> Amazon EKS</p>
+    </div>
+
+    <button onclick="checkBackend()">
+        Check Backend
+    </button>
+
+    <div id="result"></div>
+
+</div>
+
+<script>
+
+async function checkBackend() {
+
+    const result = document.getElementById("result");
+    const status = document.getElementById("status");
+
+    result.innerHTML = "Calling backend...";
+
+    try {
+
+        const response = await fetch("/api/health");
+
+        if (!response.ok) {
+            throw new Error("Backend returned an error");
+        }
+
+        const data = await response.json();
+
+        status.innerHTML = "Healthy";
+
+        result.innerHTML =
+            "<strong>Backend Response:</strong><br>" +
+            data.message;
+
+    } catch (error) {
+
+        status.innerHTML = "Backend Unavailable";
+
+        result.innerHTML =
+            "<strong>Error:</strong><br>" +
+            error.message;
+    }
+}
+
+</script>
+
+</body>
+</html>
