@@ -30,7 +30,7 @@ metadata:
   name: frontend-service
   namespace: demo-app
 spec:
-  type: clusterIP
+  type: ClusterIP
 
   selector:
     app: frontend
