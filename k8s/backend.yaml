@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: backend
-          image: YOUR_DOCKERHUB_USERNAME/eks-demo-backend:1.0
+          image: pddevops1998/eks-demo-backend:1.0
 
           ports:
             - containerPort: 5000
